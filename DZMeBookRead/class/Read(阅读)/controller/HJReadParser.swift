@@ -145,7 +145,7 @@ class HJReadParser: NSObject {
                 lastRange = range
             }
             
-        }else{
+        } else {
             
             let readChapterModel = HJReadChapterModel()
             

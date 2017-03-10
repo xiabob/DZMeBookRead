@@ -60,7 +60,7 @@ class HJReadSettingCustomView: UIView {
         let spaceW:CGFloat = HJReadSettingSpaceW
         
         // 标题
-        titleLabel.frame = CGRect(x: spaceW, y: 0, width: 60, height: height)
+        titleLabel.frame = CGRect(x: spaceW, y: 0, width: 80, height: height)
         
         // 按钮frame
         if !nomalNames.isEmpty {

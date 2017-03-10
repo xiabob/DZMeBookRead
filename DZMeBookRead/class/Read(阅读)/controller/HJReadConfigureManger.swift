@@ -13,13 +13,13 @@ private let HJReadConfigure:String = "HJReadConfigure"
 let HJReadColors:[UIColor] = [HJColor_8,HJColor_9,HJColor_10,HJColor_11,HJColor_12,HJColor_13]
 
 /// 阅读最小阅读字体大小
-let HJReadMinFontSize:Int = 12
+let HJReadMinFontSize:Int = 14
 
 /// 阅读最大阅读字体大小
-let HJReadMaxFontSize:Int = 25
+let HJReadMaxFontSize:Int = 40
 
 /// 阅读当前默认字体大小
-let HJReadDefaultFontSize:Int = 14
+let HJReadDefaultFontSize:Int = 18
 
 /// 字体颜色
 let HJReadTextColor:UIColor = RGB(68, g: 68, b: 68)

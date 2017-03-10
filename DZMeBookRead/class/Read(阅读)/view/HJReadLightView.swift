@@ -17,7 +17,7 @@ protocol HJReadLightViewDelegate:NSObjectProtocol {
 class HJReadLightView: UIView {
 
     /// 代理
-    weak var delegate:HJReadLightViewDelegate?
+    weak var delegate: HJReadLightViewDelegate?
     
     // 分割线
     fileprivate var spaceLine:UIView!

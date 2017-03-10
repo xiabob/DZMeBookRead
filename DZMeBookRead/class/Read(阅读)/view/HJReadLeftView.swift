@@ -6,7 +6,7 @@
 //  Copyright © 2016年 HanJue. All rights reserved.
 //
 
-private let TableViewW:CGFloat = ScreenWidth * 0.6
+private let TableViewW:CGFloat = ScreenWidth * 0.75
 
 import UIKit
 
@@ -29,6 +29,13 @@ class HJReadLeftView: NSObject,UITableViewDelegate,UITableViewDataSource,HJReadL
     
     /// 当前页面的隐藏
     var hidden:Bool = false
+    
+    /// 当前选择的章节
+    var currentChapterID: String {
+        get {
+            return readPageController.readConfigure.changeReadChapterModel.chapterID
+        }
+    }
     
     // 代理
     weak var delegate:HJReadLeftViewDelegate?
@@ -166,13 +173,15 @@ class HJReadLeftView: NSObject,UITableViewDelegate,UITableViewDataSource,HJReadL
             
             cell.textLabel?.textColor = HJReadTextColor
 
-//            if (model.isDownload.boolValue) { // 下载了
-//
-//
-//            }else{ // 该章节没下载
-//
-//                cell.textLabel?.textColor = UIColor.grayColor()
-//            }
+            if (model.isDownload.boolValue) { // 下载了
+                cell.textLabel?.textColor = HJReadTextColor
+            }else{ // 该章节没下载
+                cell.textLabel?.textColor = UIColor.gray
+            }
+            
+            if model.chapterID == currentChapterID {
+                cell.textLabel?.textColor = HJColor_4
+            }
            
             return cell
             
@@ -336,8 +345,13 @@ class HJReadLeftView: NSObject,UITableViewDelegate,UITableViewDataSource,HJReadL
             myWindow.isHidden = hidden
             
             UIView.animate(withDuration: animateDuration, animations: {[weak self] ()->() in
+                if self == nil {return}
                 
                 self?.tableView.frame = CGRect(x: 0, y: 0, width: TableViewW, height: ScreenHeight)
+                let row = max(self!.currentChapterID.integerValue() - 1, 0)
+                let indexPath = IndexPath(row: row, section: 0)
+                self?.tableView.scrollToRow(at: indexPath, at: .top, animated: false)
+                self?.tableView.reloadData()
                 self?.coverButton.alpha = 0.6
             }) 
         }

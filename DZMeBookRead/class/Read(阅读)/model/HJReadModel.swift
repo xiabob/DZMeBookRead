@@ -53,6 +53,18 @@ class HJReadModel: NSObject,NSCoding {
         }
     }
     
+    convenience init(bookID: String, chapterListModels: [HJReadChapterListModel]) {
+        self.init()
+        self.bookID = bookID;
+        self.readChapterListModels = chapterListModels;
+        
+        if !readChapterListModels.isEmpty {
+            readRecord.readChapterListModel = readChapterListModels.first
+            readRecord.chapterIndex = 0
+            readRecord.chapterCount = NSNumber(value:readChapterListModels.count)
+        }
+    }
+    
     override init() {
         super.init()
         

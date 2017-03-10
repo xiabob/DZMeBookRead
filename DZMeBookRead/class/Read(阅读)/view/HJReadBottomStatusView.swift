@@ -26,7 +26,8 @@ class HJReadBottomStatusView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+         // 允许获取电量
+        UIDevice.current.isBatteryMonitoringEnabled = true
         addSubviews()
     }
     

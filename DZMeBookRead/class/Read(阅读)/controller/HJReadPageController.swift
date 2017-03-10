@@ -9,7 +9,7 @@
 import UIKit
 
 //最上层的界面 HJReadPageController ->(持有add) DZMCoverController/UIPageViewController ->(包含) HJReadViewController(实际文字展示界面)
-class HJReadPageController: HJViewController,UIPageViewControllerDelegate,UIPageViewControllerDataSource,HJAppDelegate,DZMCoverControllerDelegate {
+class HJReadPageController: HJViewController,UIPageViewControllerDelegate,UIPageViewControllerDataSource,DZMCoverControllerDelegate {
     
     // 阅读主对象
     var readModel:HJReadModel!
@@ -33,11 +33,13 @@ class HJReadPageController: HJViewController,UIPageViewControllerDelegate,UIPage
         readSetup.setFlipEffect(HJReadConfigureManger.shareManager.flipEffect,chapterLookPageClear: false)
     }
     
+    deinit {
+        print("HJReadPageController deinit")
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        // 设置回调代理
-        (UIApplication.shared.delegate as! AppDelegate).delegate = self
+        addNotification()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -48,9 +50,10 @@ class HJReadPageController: HJViewController,UIPageViewControllerDelegate,UIPage
         UIApplication.shared.setStatusBarStyle(UIStatusBarStyle.default, animated: true)
         
         UIApplication.shared.setStatusBarHidden(false, with: UIStatusBarAnimation.fade)
+        
+        removeNotification()
     }
     
-    // MARK: -- PageController
     // MARK: -- PageController
     
     func creatPageController(_ displayController:UIViewController) {
@@ -190,27 +193,12 @@ class HJReadPageController: HJViewController,UIPageViewControllerDelegate,UIPage
         }
     }
     
-    // MARK: -- 返回以及同步数据
+    // MARK: -- 设置导航栏
     
     override func initNavigationBarSubviews() {
         super.initNavigationBarSubviews()
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem.AppNavigationBarBackItemOne(UIEdgeInsetsMake(0, 0, 0, 0), target: self, action: #selector(HJNavigationController.clickBack))
-    }
-    
-    
-    // MARK: -- HJAppDelegate 保存阅读记录
-    
-    /// app 即将退出
-    func applicationWillTerminate(_ application: UIApplication) {
-        
-        readConfigure.updateReadRecord()
-    }
-    
-    /// app 内存警告可能要终止程序
-    func applicationDidReceiveMemoryWarning(_ application: UIApplication) {
-        
-        readConfigure.updateReadRecord()
+        navigationItem.leftBarButtonItem = UIBarButtonItem.AppNavigationBarBackItemOne(UIEdgeInsetsMake(0, 0, 0, 0), target: self, action: #selector(clickBack))
     }
     
     override func clickBack() {
@@ -219,8 +207,6 @@ class HJReadPageController: HJViewController,UIPageViewControllerDelegate,UIPage
         // 保存记录
         readConfigure.updateReadRecord()
         
-        // 退出了 进行清理工作
-        (UIApplication.shared.delegate as! AppDelegate).delegate = nil
         readSetup = nil
         readConfigure = nil
         if (pageViewController != nil) {
@@ -236,10 +222,29 @@ class HJReadPageController: HJViewController,UIPageViewControllerDelegate,UIPage
         }
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        
-        // 内存警告保存记录
+    
+    // MARK: -- notification 
+    
+    func addNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillTerminate), name: NSNotification.Name.UIApplicationWillTerminate, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidReceiveMemoryWarning), name: NSNotification.Name.UIApplicationDidReceiveMemoryWarning, object: nil)
+    }
+    
+    func removeNotification() {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    func applicationWillTerminate() {
         readConfigure.updateReadRecord()
     }
+    
+    func applicationDidEnterBackground() {
+        readConfigure.updateReadRecord()
+    }
+    
+    func applicationDidReceiveMemoryWarning() {
+        readConfigure.updateReadRecord()
+    }
+    
 }

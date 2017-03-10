@@ -14,10 +14,10 @@
 
 import UIKit
 
-class HJReadUI: NSObject,HJReadBottomViewDelegate,HJReadLightViewDelegate {
+class HJReadUI: NSObject, HJReadBottomViewDelegate, HJReadLightViewDelegate {
     
     /// 阅读控制器
-    fileprivate weak var readPageController:HJReadPageController!
+    fileprivate weak var readPageController: HJReadPageController?
     
     /// UI布局
     var bottomView:HJReadBottomView!
@@ -27,7 +27,7 @@ class HJReadUI: NSObject,HJReadBottomViewDelegate,HJReadLightViewDelegate {
     var settingView:HJReadSettingView!
     
     /// 阅读控制器设置
-    class func readUIWithReadController(_ readPageController:HJReadPageController) ->HJReadUI {
+    class func readUIWithReadController(_ readPageController: HJReadPageController) ->HJReadUI {
         
         let readUI = HJReadUI()
         
@@ -42,15 +42,15 @@ class HJReadUI: NSObject,HJReadBottomViewDelegate,HJReadLightViewDelegate {
     func addSubviews() {
         
         // lightCoverView 设置日间模式、夜间模式的mask视图
-        lightCoverView = SpaceLineSetup(readPageController.view, color: UIColor.black)
+        lightCoverView = SpaceLineSetup(readPageController?.view, color: UIColor.black)
         lightCoverView.isUserInteractionEnabled = false
         setLightCoverView(HJReadConfigureManger.shareManager.lightType)
         
         // bottomView 底部的设置视图（包括上下一章、目录、亮度、设置、下载）
         bottomView = HJReadBottomView()
         bottomView.delegate = self
-        readPageController.view.addSubview(bottomView)
-        bottomView.slider.maximumValue = Float(readPageController.readModel.readChapterListModels.count - 1) // 设置页码
+        readPageController?.view.addSubview(bottomView)
+        bottomView.slider.maximumValue = Float((readPageController?.readModel.readChapterListModels.count ?? 1) - 1) // 设置页码
         
         // leftView 点击目录按钮出现的目录书签视图
         leftView = HJReadLeftView()
@@ -59,14 +59,14 @@ class HJReadUI: NSObject,HJReadBottomViewDelegate,HJReadLightViewDelegate {
         // lightView 点击亮度，出现的亮度调节视图
         lightView = HJReadLightView()
         lightView.delegate = self
-        readPageController.view.addSubview(lightView)
+        readPageController?.view.addSubview(lightView)
         
         // settingView 点击设置界面，出现更多设置视图
         settingView = HJReadSettingView()
-        readPageController.view.addSubview(settingView)
+        readPageController?.view.addSubview(settingView)
         
         // frame
-        lightCoverView.frame = readPageController.view.bounds
+        lightCoverView.frame = readPageController?.view.bounds ?? CGRect.zero
         topView(true,animated: false)
         bottomView(true, animated: false, completion: nil)
         lightView(true, animated: false, completion: nil)
@@ -86,22 +86,22 @@ class HJReadUI: NSObject,HJReadBottomViewDelegate,HJReadLightViewDelegate {
     
     /// 上一章
     func readBottomViewLastChapter(_ readBottomView: HJReadBottomView) {
-        
-        readPageController.readSetup.setFlipEffect(HJReadConfigureManger.shareManager.flipEffect,chapterID: "\(readPageController.readModel.readRecord.readChapterListModel.chapterID.integerValue() - 1)", chapterLookPageClear: true, contentOffsetYClear: true)
+        let chapterID = readPageController?.readModel.readRecord.readChapterListModel.chapterID.integerValue() ?? 1
+        readPageController?.readSetup.setFlipEffect(HJReadConfigureManger.shareManager.flipEffect,chapterID: "\(chapterID - 1)", chapterLookPageClear: true, contentOffsetYClear: true)
     }
     
     /// 下一章
     func readBottomViewNextChapter(_ readBottomView: HJReadBottomView) {
-        
-        readPageController.readSetup.setFlipEffect(HJReadConfigureManger.shareManager.flipEffect,chapterID: "\(readPageController.readModel.readRecord.readChapterListModel.chapterID.integerValue() + 1)", chapterLookPageClear: true,contentOffsetYClear: true)
+        let chapterID = readPageController?.readModel.readRecord.readChapterListModel.chapterID.integerValue() ?? 1
+        readPageController?.readSetup.setFlipEffect(HJReadConfigureManger.shareManager.flipEffect,chapterID: "\(chapterID + 1)", chapterLookPageClear: true,contentOffsetYClear: true)
     }
     
     /// 拖动进度
     func readBottomViewChangeSlider(_ readBottomView: HJReadBottomView, slider: UISlider) {
         
-        readPageController.readModel.readRecord.page = NSNumber(value:Int(slider.value))
-       
-        readPageController.readSetup.setFlipEffect(HJReadConfigureManger.shareManager.flipEffect,chapterID: readPageController.readModel.readRecord.readChapterModel!.chapterID,chapterLookPageClear: false, contentOffsetYClear: true)
+        readPageController?.readModel.readRecord.page = NSNumber(value:Int(slider.value))
+       let chapterID = readPageController?.readModel.readRecord.readChapterListModel.chapterID ?? "1"
+        readPageController?.readSetup.setFlipEffect(HJReadConfigureManger.shareManager.flipEffect,chapterID: chapterID,chapterLookPageClear: false, contentOffsetYClear: true)
     }
     
     
@@ -163,7 +163,7 @@ class HJReadUI: NSObject,HJReadBottomViewDelegate,HJReadLightViewDelegate {
     func topView(_ hidden:Bool,animated:Bool) {
         
         // 导航栏操作
-        readPageController.navigationController?.setNavigationBarHidden(hidden, animated: animated)
+        readPageController?.navigationController?.setNavigationBarHidden(hidden, animated: animated)
         UIApplication.shared.setStatusBarHidden(hidden, with: UIStatusBarAnimation.slide)
     }
     
