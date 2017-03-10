@@ -32,7 +32,7 @@ class HJReadSettingCustomView: UIView {
         
         // title
         titleLabel = UILabel()
-        titleLabel.font = UIFont.fontOfSize(14)
+        titleLabel.font = UIFont.fontOfSize(16)
         titleLabel.textColor = UIColor.black
         addSubview(titleLabel)
         

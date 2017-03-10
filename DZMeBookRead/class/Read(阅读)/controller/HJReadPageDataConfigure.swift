@@ -14,6 +14,7 @@
 
 import UIKit
 
+///阅读数据相关的配置，主要存放阅读页面的数据方法
 class HJReadPageDataConfigure: NSObject {
 
     /// 阅读控制器

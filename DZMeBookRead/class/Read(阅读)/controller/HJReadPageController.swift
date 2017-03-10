@@ -8,6 +8,7 @@
 
 import UIKit
 
+//最上层的界面 HJReadPageController ->(持有add) DZMCoverController/UIPageViewController ->(包含) HJReadViewController(实际文字展示界面)
 class HJReadPageController: HJViewController,UIPageViewControllerDelegate,UIPageViewControllerDataSource,HJAppDelegate,DZMCoverControllerDelegate {
     
     // 阅读主对象
@@ -18,8 +19,8 @@ class HJReadPageController: HJViewController,UIPageViewControllerDelegate,UIPage
     var coverController:DZMCoverController!
     
     /// 阅读设置
-    var readSetup:HJReadSetup!
-    var readConfigure:HJReadPageDataConfigure!
+    var readSetup:HJReadSetup! ///界面相关的设置
+    var readConfigure:HJReadPageDataConfigure! ///阅读数据相关的配置
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,7 +85,7 @@ class HJReadPageController: HJViewController,UIPageViewControllerDelegate,UIPage
             
             pageViewController.setViewControllers([displayController], direction: UIPageViewControllerNavigationDirection.forward, animated: true, completion: nil)
             
-        }else{
+        } else {
             
             coverController = DZMCoverController()
             

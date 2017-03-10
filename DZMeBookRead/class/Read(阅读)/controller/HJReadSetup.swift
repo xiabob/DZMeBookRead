@@ -17,6 +17,7 @@ private let HJTempW:CGFloat = ScreenWidth / 3
 
 import UIKit
 
+///界面相关的设置,主要存放阅读页面操作逻辑 UI
 class HJReadSetup: NSObject,UIGestureRecognizerDelegate,HJReadSettingColorViewDelegate,HJReadSettingFlipEffectViewDelegate,HJReadSettingFontViewDelegate,HJReadSettingFontSizeViewDelegate,HJReadLeftViewDelegate {
 
     /// 阅读控制器
@@ -52,7 +53,7 @@ class HJReadSetup: NSObject,UIGestureRecognizerDelegate,HJReadSettingColorViewDe
     /// 初始化子控件相关
     func setupSubviews() {
         
-        // rightItem
+        // rightItem 设置导航栏书签按钮
         rightItem = UIButton(type:UIButtonType.custom)
         rightItem.imageView?.contentMode = UIViewContentMode.scaleAspectFit
         rightItem.setImage(UIImage(named:"book_mark_nomal")!, for: UIControlState.normal)

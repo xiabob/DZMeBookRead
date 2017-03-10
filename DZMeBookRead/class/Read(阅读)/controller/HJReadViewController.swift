@@ -79,10 +79,12 @@ class HJReadViewController: HJTableViewController {
     override func addSubviews() {
         super.addSubviews()
         
+        //左上角章节名
         readTopStatusView = HJReadTopStatusView()
         readTopStatusView.frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: HJReadTopStatusViewH)
         view.addSubview(readTopStatusView)
         
+        //底部的时间、电池信息
         readBottomStatusView = HJReadBottomStatusView()
         readBottomStatusView.frame = CGRect(x: 0, y: ScreenHeight - HJReadBottomStatusViewH, width: ScreenWidth, height: HJReadBottomStatusViewH)
         view.addSubview(readBottomStatusView)

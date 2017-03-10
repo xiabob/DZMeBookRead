@@ -9,6 +9,7 @@
 import UIKit
 import CoreText
 
+///章节模型 包括内容相关
 class HJReadChapterModel: NSObject,NSCoding {
     
     var chapterID: String!                 // 章节ID

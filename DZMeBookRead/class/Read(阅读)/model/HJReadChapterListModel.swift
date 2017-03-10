@@ -8,6 +8,7 @@
 
 import UIKit
 
+///章节模型，但是用于目录展示
 class HJReadChapterListModel: NSObject {
     
     var changeChapterHeight:NSNumber! = 0

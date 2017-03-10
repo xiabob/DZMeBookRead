@@ -41,27 +41,27 @@ class HJReadUI: NSObject,HJReadBottomViewDelegate,HJReadLightViewDelegate {
     /// 添加子控件
     func addSubviews() {
         
-        // lightCoverView
+        // lightCoverView 设置日间模式、夜间模式的mask视图
         lightCoverView = SpaceLineSetup(readPageController.view, color: UIColor.black)
         lightCoverView.isUserInteractionEnabled = false
         setLightCoverView(HJReadConfigureManger.shareManager.lightType)
         
-        // bottomView
+        // bottomView 底部的设置视图（包括上下一章、目录、亮度、设置、下载）
         bottomView = HJReadBottomView()
         bottomView.delegate = self
         readPageController.view.addSubview(bottomView)
         bottomView.slider.maximumValue = Float(readPageController.readModel.readChapterListModels.count - 1) // 设置页码
         
-        // leftView
+        // leftView 点击目录按钮出现的目录书签视图
         leftView = HJReadLeftView()
         leftView.readPageController = readPageController
         
-        // lightView
+        // lightView 点击亮度，出现的亮度调节视图
         lightView = HJReadLightView()
         lightView.delegate = self
         readPageController.view.addSubview(lightView)
         
-        // settingView
+        // settingView 点击设置界面，出现更多设置视图
         settingView = HJReadSettingView()
         readPageController.view.addSubview(settingView)
         

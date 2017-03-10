@@ -228,7 +228,7 @@ func ViewPanGestureRecognizerEnabled(_ view:UIView,enabled:Bool) {
 /// 归档阅读文件文件
 func ReadKeyedArchiver(_ folderName:String,fileName:String,object:AnyObject) {
     
-    var path = (NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true).last!) + "/DZMeBookRead/DZM\(folderName)"
+    var path = (NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true).last!) + "/BookRead/\(folderName)"
     
     if (CreatFilePath(path)) { // 创建文件夹成功或者文件夹存在
         
@@ -241,7 +241,7 @@ func ReadKeyedArchiver(_ folderName:String,fileName:String,object:AnyObject) {
 /// 解档阅读文件文件
 func ReadKeyedUnarchiver(_ folderName:String,fileName:String) ->AnyObject? {
     
-    let path = ((NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true).last! as String) + "/DZMeBookRead/DZM\(folderName)") + "/\(fileName)"
+    let path = ((NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true).last! as String) + "/BookRead/\(folderName)") + "/\(fileName)"
     
     return NSKeyedUnarchiver.unarchiveObject(withFile: path) as AnyObject?
 }
@@ -249,7 +249,7 @@ func ReadKeyedUnarchiver(_ folderName:String,fileName:String) ->AnyObject? {
 /// 删除阅读归档文件
 func ReadKeyedRemoveArchiver(_ folderName:String,fileName:String) {
     
-    let path = ((NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true).last! as String) + "/DZMeBookRead/DZM\(folderName)") + "/\(fileName)"
+    let path = ((NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true).last! as String) + "/BookRead/\(folderName)") + "/\(fileName)"
     
     do{
         try FileManager.default.removeItem(atPath: path)
@@ -259,7 +259,7 @@ func ReadKeyedRemoveArchiver(_ folderName:String,fileName:String) {
 /// 是否存在了改归档文件
 func ReadKeyedIsExistArchiver(_ folderName:String,fileName:String) ->Bool {
     
-    let path = ((NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true).last! as String) + "/DZMeBookRead/DZM\(folderName)") + "/\(fileName)"
+    let path = ((NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true).last! as String) + "/BookRead/\(folderName)") + "/\(fileName)"
     
     return FileManager.default.fileExists(atPath: path)
 }
